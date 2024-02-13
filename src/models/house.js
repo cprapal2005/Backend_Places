@@ -30,6 +30,11 @@ const houseSchema  = new mongoose.Schema({
         type: Number,
         required: true
     },
+    nombreOwner: {
+        type: String,
+        required: true,
+        trim: true
+    },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
