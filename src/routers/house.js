@@ -50,7 +50,7 @@ router.get('/houses/:id', auth, async (req, res) => {
 router.patch('/houses/:id', auth, async (req, res) => {
     const _id = req.params.id
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['titulo', 'descripcion', 'direccion', 'ciudad', 'pais', 'precio']
+    const allowedUpdates = ['titulo', 'descripcion', 'direccion', 'ciudad', 'pais', 'precio', 'nombreOwner']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -58,7 +58,7 @@ router.patch('/houses/:id', auth, async (req, res) => {
     }
 
     try {
-        const house = await House.findOne(_id)
+        const house = await House.findOne({_id})
 
         if (!house) {
             return res.status(404).send()
@@ -75,7 +75,7 @@ router.patch('/houses/:id', auth, async (req, res) => {
 router.delete('/houses/:id', auth, async (req, res) => {
     const _id = req.params.id
     try {
-        const house = await Task.findOneAndDelete({ _id })
+        const house = await House.findOneAndDelete({ _id })
 
         if (!house) {
             res.status(404).send()
