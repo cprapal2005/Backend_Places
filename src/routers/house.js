@@ -35,7 +35,7 @@ router.get('/houses/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const house = await House.findOne(_id)
+        const house = await House.findOne({_id})
 
         if (!house) {
             return res.status(404).send()
@@ -43,7 +43,7 @@ router.get('/houses/:id', auth, async (req, res) => {
 
         res.send(house)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send({ error: error.message })
     }
 })
 

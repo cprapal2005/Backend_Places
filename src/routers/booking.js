@@ -22,11 +22,16 @@ router.post('/bookings', auth, async (req, res) => {
     }
 })
 
-router.get('/bookings/:user_id', auth, async (req, res) => {
-    const user_id = req.params.id
+router.get('/booking', auth, async (req, res) => {
 
     try {
-        const booking  = await Booking.findOne({user_id})
+        const bookings  = await Booking.find()
+
+        let booking = [];
+
+        bookings.forEach(book => {
+            if(book.user_id==req.user.id) booking.push(book);
+        });
 
         if (!booking) {
             return res.status(404).send()
